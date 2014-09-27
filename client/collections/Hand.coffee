@@ -4,15 +4,16 @@ class window.Hand extends Backbone.Collection
 
 
   initialize: (array, @deck, @isDealer) ->
-    if @isDealer
-      @isMyTurn = false
-    else
-      @isMyTurn = true
+    # if @isDealer
+    #   @isMyTurn = false
+    # else
+    #   @isMyTurn = true
 
   hit: ->
     # debugger
     @add(@deck.pop()).last()
-    # @checkScore()
+    @checkScore()
+    return
 
   scores: ->
     # The scores are an array of potential scores.
@@ -28,23 +29,26 @@ class window.Hand extends Backbone.Collection
 
     #if the hand collection (add, remove) -> check score
 
-  # checkScore: ->
-  #   console.log 'isDealer = ', @isDealer, 'score = ',  score()
-  #   if @scores()[0] > 21
-  #     @trigger 'gameIsOver', @
-  #   else if @scores()[0] = 21 and @isDealer
-  #     @trigger 'gameIsOver', @
-  #   else if @scores()[0] = 21 and !@isDealer
-  #     @stand()
+  checkScore: ->
+    console.log 'isDealer = ', @isDealer, 'score = ',  @scores()[0]
+    if @scores()[0] > 21
+      console.log 'gameIsOver from > 21'
+      @trigger 'gameIsOver', @
+    else if @scores()[0] == 21 and @isDealer
+      console.log 'gemaIsOver from ='
+      @trigger 'gameIsOver', @
+    else if @scores()[0] == 21 and !@isDealer
+      @stand()
+    return
 
-  # makeDealerTurn: ->
-  #   if score()[0] < 17
-  #     @hit()
-  #     @makeDealerTurn()
-  #   else
-  #     @trigger 'gameIsOver', @
+  makeDealerTurn: ->
+    if @scores()[0] < 17
+      @hit()
+      @makeDealerTurn()
+    else
+      @trigger 'gameIsOver', @
+    return
 
-  # stand: ->
-  #   if !@isDealer
-  #     @trigger 'endPlayerTurn'
-  #   @isMyTurn = false and trigger 'turnChanged'
+  stand: ->
+    @trigger 'endPlayerTurn', @
+    return

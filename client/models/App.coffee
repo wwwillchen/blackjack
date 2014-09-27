@@ -6,23 +6,23 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
-    # # listen 'change: isMyTurn' -> whoseTurnC
-    # @get('playerHand').on 'change:isMyTurn', @whoseTurn()
-    # # listen 'game is over ' -> checktheWinner
-    # @get('playerHand').on 'gameIsOver', @checkWinner()
-    # @get('dealerHand').on 'gameIsOver', @checkWinner()
+    @get('playerHand').on 'endPlayerTurn', @dealerTurn # @someCallback
+    @get('playerHand').on 'gameIsOver', @checkWinner
+    @get('dealerHand').on 'gameIsOver', @checkWinner
+    return
 
-  # checkWinner: ->
-  #   if @get('playerHand').score() > @get('dealerHand').score()
-  #     @trigger 'dealerIsWinner', @
-  #   else if @get('playerHand').score() == @get('dealerHand').score()
-  #     @trigger 'tie', @
-  #   else
-  #     @trigger 'playerIsWinner', @
+  checkWinner: =>
+    console.log 'I am inside checkWinner'
+    if @get('playerHand').scores()[0] > @get('dealerHand').scores()[0]
+      @trigger 'dealerIsWinner', @
+      console.log 'dealerIsWinner'
+    else if @get('playerHand').scores()[0] == @get('dealerHand').scores()[0]
+      @trigger 'tie', @
+    else
+      @trigger 'playerIsWinner', @
+      console.log 'playerIsWinner'
+    return
 
-  # whoseTurn: (playerOrDealer) ->
-  #   if playerOrDealer == @get 'playerHand'
-  #     @get('dealerHand').makeDealerTurn()
-  #   else
-  #     @checkWinner()
-
+  dealerTurn: =>
+    @get('dealerHand').makeDealerTurn()
+    return
