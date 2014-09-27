@@ -12,7 +12,6 @@ class window.App extends Backbone.Model
     return
 
   checkWinner: =>
-    debugger
     if @get('playerHand').scores()[0] > 21
       console.log 'dealer Winner (player over 21)'
       @trigger 'dealerIsWinner', @

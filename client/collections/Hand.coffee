@@ -4,17 +4,13 @@ class window.Hand extends Backbone.Collection
 
 
   initialize: (array, @deck, @isDealer) ->
-    # if @isDealer
-    #   @isMyTurn = false
-    # else
-    #   @isMyTurn = true
 
   hit: ->
-    # debugger
     @add(@deck.pop()).last()
-    # HandView fires the event 'addedComplete'
-    # until we get the event 'addedComplete' we won't check the Score
+    # 25... the HandView is listening and is refreshing all of the cardViews
+    #
     if not @isDealer
+      console.log 'checking Player Score'
       @checkPlayerScore()
     # window.setTimeout (=>
     #   @checkPlayerScore()
@@ -34,13 +30,10 @@ class window.Hand extends Backbone.Collection
     , 0
     if hasAce then [score, score + 10] else [score]
 
-    #if the hand collection (add, remove) -> check score
 
   checkPlayerScore: ->
     if @scores()[0] > 21
       @trigger 'gameIsOver', @
-    # else if @scores()[0] == 21 and @isDealer
-    #   @trigger 'gameIsOver', @
     else if @scores()[0] == 21 and !@isDealer
       @stand()
     return

@@ -1,3 +1,8 @@
+body {
+  background: #165B18;
+  color: #E8AF0C;
+}
+
 .card {
   float: left;
   border: solid 1px black;
@@ -13,4 +18,46 @@
 
 .hand {
   overflow: auto;
+}
+
+
+$dia: 6em;
+$incolor: green;
+$outcolor: #fff;
+$bdrwidth: 10px;
+$time: 0.15s;
+
+body {
+  font-family: Open Sans;
+  font-size: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.circ-button {
+  display: block;
+  width: $dia;
+  height: $dia;
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: $outcolor;
+  background: $incolor;
+  border: $bdrwidth dashed $outcolor;
+  border-radius: $dia;
+  padding-top: $dia/2 - 1em;
+  transition: all linear $time;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  margin: 2em auto;
+
+  &:hover {
+    background: darken(invert($incolor), 25%);
+    border-color: invert($outcolor);
+    color: invert($outcolor);
+  }
 }
