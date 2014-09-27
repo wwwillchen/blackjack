@@ -45,7 +45,7 @@ class window.Hand extends Backbone.Collection
     if @scores()[0] < 17
       @hit()
       @makeDealerTurn()
-    else
+    else if @scores()[0] < 21
       @trigger 'gameIsOver', @
     return
 

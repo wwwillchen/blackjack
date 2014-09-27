@@ -13,7 +13,13 @@ class window.App extends Backbone.Model
 
   checkWinner: =>
     console.log 'I am inside checkWinner'
-    if @get('playerHand').scores()[0] > @get('dealerHand').scores()[0]
+    if @get('playerHand').scores()[0] > 21
+      console.log 'dealerIsWinner'
+      @trigger 'dealerIsWinner', @
+    else if @get('dealerHand').scores()[0] > 21
+      @trigger 'playerIsWinner', @
+      console.log 'playerIsWinner'
+    else if @get('playerHand').scores()[0] < @get('dealerHand').scores()[0]
       @trigger 'dealerIsWinner', @
       console.log 'dealerIsWinner'
     else if @get('playerHand').scores()[0] == @get('dealerHand').scores()[0]
