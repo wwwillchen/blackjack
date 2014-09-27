@@ -12,7 +12,14 @@ class window.Hand extends Backbone.Collection
   hit: ->
     # debugger
     @add(@deck.pop()).last()
-    @checkScore()
+    # HandView fires the event 'addedComplete'
+    # until we get the event 'addedComplete' we won't check the Score
+    if not @isDealer
+      @checkPlayerScore()
+    # window.setTimeout (=>
+    #   @checkPlayerScore()
+    #   return
+    # ), 1500
     return
 
   scores: ->
@@ -29,14 +36,11 @@ class window.Hand extends Backbone.Collection
 
     #if the hand collection (add, remove) -> check score
 
-  checkScore: ->
-    console.log 'isDealer = ', @isDealer, 'score = ',  @scores()[0]
+  checkPlayerScore: ->
     if @scores()[0] > 21
-      console.log 'gameIsOver from > 21'
       @trigger 'gameIsOver', @
-    else if @scores()[0] == 21 and @isDealer
-      console.log 'gemaIsOver from ='
-      @trigger 'gameIsOver', @
+    # else if @scores()[0] == 21 and @isDealer
+    #   @trigger 'gameIsOver', @
     else if @scores()[0] == 21 and !@isDealer
       @stand()
     return
@@ -45,7 +49,7 @@ class window.Hand extends Backbone.Collection
     if @scores()[0] < 17
       @hit()
       @makeDealerTurn()
-    else if @scores()[0] < 21
+    else
       @trigger 'gameIsOver', @
     return
 

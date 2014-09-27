@@ -6,11 +6,17 @@ class window.HandView extends Backbone.View
   template: _.template '<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>)</h2>'
 
   initialize: ->
-    @collection.on 'add remove change', => @render()
     @render()
+    @collection.on 'add remove change', => @render()
+    @collection.on 'endPlayerTurn', @hideButtons
+
+  hideButtons: ->
+    $('.stand-button').css('display','none')
+    $('.hit-button').css('display','none')
+
 
   render: ->
-    console.log 'I am in hand view rendering'
+    console.log 'rendering handview'
     @$el.children().detach()
     @$el.html @template @collection
     @$el.append @collection.map (card) ->

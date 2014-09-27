@@ -12,7 +12,6 @@ class window.CardView extends Backbone.View
     @render()
 
   render: ->
-    console.log 'I am in card view rendering'
     @$el.children().detach().end().html
     @$el.html @template @model.attributes
     #@$el.css =

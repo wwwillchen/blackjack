@@ -12,21 +12,22 @@ class window.App extends Backbone.Model
     return
 
   checkWinner: =>
-    console.log 'I am inside checkWinner'
+    debugger
     if @get('playerHand').scores()[0] > 21
-      console.log 'dealerIsWinner'
+      console.log 'dealer Winner (player over 21)'
       @trigger 'dealerIsWinner', @
-    else if @get('dealerHand').scores()[0] > 21
+    else if @get('dealerHand').scores()[0] > 21 #ISSUE
+      console.log 'player Winner (dealer over 21)'
       @trigger 'playerIsWinner', @
-      console.log 'playerIsWinner'
     else if @get('playerHand').scores()[0] < @get('dealerHand').scores()[0]
+      console.log 'dealer Winner (dealer higher score)'
       @trigger 'dealerIsWinner', @
-      console.log 'dealerIsWinner'
     else if @get('playerHand').scores()[0] == @get('dealerHand').scores()[0]
+      console.log 'tie'
       @trigger 'tie', @
     else
+      console.log 'player is Winner (player higher score)'
       @trigger 'playerIsWinner', @
-      console.log 'playerIsWinner'
     return
 
   dealerTurn: =>
